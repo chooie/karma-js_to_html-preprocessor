@@ -12,11 +12,11 @@ exports.__express = function __express(filePath, options, callback) {
   if (!Array.isArray(content)) {
     throw new Error(
       util.stripMargin`
-          |exports.page must be set to a function that returns an array that
-          |conforms to the @chooie/js_to_html structure as documented at
-          |'https://github.com/chooie/js_to_html'.
-          |Got '${content}' of type ${typeof content}.
-          |Issue found in file '${filePath}'.`
+          |exports.page must be set to a function(options: Object) that returns
+          |an array that conforms to the @chooie/js_to_html structure as
+          |documented at 'https://github.com/chooie/js_to_html'. Got
+          |'${content}' of type ${typeof content}. Issue found in file
+          |'${filePath}'.`
     );
   }
 

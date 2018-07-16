@@ -32,7 +32,7 @@ function checkPageIsCorrectlySetup(jsPage, filePath) {
 }
 
 exports.makeContextualErrorMessage = makeContextualErrorMessage;
-function makeContextualErrorMessage(beginningMessage, content, filePath) {
+function makeContextualErrorMessage(content, filePath) {
   const errorMessage = util.stripMargin`
           |exports.page must be set to a function(options: Object) that returns
           |an array that conforms to the @chooie/js_to_html structure as
