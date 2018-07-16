@@ -1,5 +1,4 @@
 const jsToHtml = require("@chooie/js_to_html");
-const requireFromString = require("require-from-string");
 
 function createJsToHtmlPreprocessor(logger, basePath, args, config) {
   const log = logger.create("preprocessor.js");
@@ -8,7 +7,7 @@ function createJsToHtmlPreprocessor(logger, basePath, args, config) {
     log.debug("Procesing '%s'.", file.originalPath);
     file.path = file.originalPath.replace(/\.js$/, ".html");
     log.debug("Content '%s'.", content);
-    const jsPage = requireFromString(content);
+    const jsPage = require(file.originalPath);
     const options = Object.assign({}, args, config);
     const htmlPage = jsToHtml.convert(jsPage.page(options));
     log.debug("HTML '%s'", htmlPage);
