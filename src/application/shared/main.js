@@ -1,7 +1,7 @@
 const jsToHtml = require("@chooie/js_to_html");
 
 function createJsToHtmlPreprocessor(logger, basePath, args, config) {
-  const log = logger.create("preprocessor.js");
+  const log = logger.create("preprocessor.js_to_html");
 
   return function(content, file, done) {
     const filePath = file.originalPath;
