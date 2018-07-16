@@ -15,5 +15,5 @@ createJsToHtmlPreprocessor.$inject = ["logger", "config.basePath", "args", "conf
 
 // PUBLISH DI MODULE
 module.exports = {
-  "preprocessor:pug": ["factory", createJsToHtmlPreprocessor]
+  "preprocessor:js_to_html": ["factory", createJsToHtmlPreprocessor]
 };
