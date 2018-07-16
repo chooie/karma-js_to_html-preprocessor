@@ -5,8 +5,8 @@ exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();
 
   httpServer.set("views", "src/application/server/views/");
-  httpServer.engine(".js", require("@chooie/js_to_html").__express);
-  httpServer.set("view engine", "js");
+  httpServer.engine("page.js", require("@chooie/js_to_html").__express);
+  httpServer.set("view engine", "page.js");
 
   httpServer.get("/", function(req, res) {
     res.render("index");

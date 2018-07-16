@@ -7,22 +7,42 @@ exports.convert = function toHtml(structureToConvert) {
 };
 
 exports.__express = function __express(filePath, options, callback) {
-  const content = require(filePath).page(options);
+  const jsPage = require(filePath);
+  checkPageIsCorrectlySetup(jsPage, filePath);
+
+  const content = jsPage.page(options);
 
   if (!Array.isArray(content)) {
-    throw new Error(
-      util.stripMargin`
-          |exports.page must be set to a function(options: Object) that returns
-          |an array that conforms to the @chooie/js_to_html structure as
-          |documented at 'https://github.com/chooie/js_to_html'. Got
-          |'${content}' of type ${typeof content}. Issue found in file
-          |'${filePath}'.`
-    );
+    throw new Error(makeContextualErrorMessage(content, filePath));
   }
 
-  const rendered = exports.convert(content);
-  return callback(null, rendered);
+  const generatedHtml = exports.convert(content);
+  return callback(null, generatedHtml);
 };
+
+exports.checkPageIsCorrectlySetup = checkPageIsCorrectlySetup;
+function checkPageIsCorrectlySetup(jsPage, filePath) {
+  if (!jsPage.page) {
+    throw new Error(`exports.page must be set at ${filePath}`);
+  }
+
+  if (typeof jsPage.page !== "function") {
+    throw new Error(makeContextualErrorMessage(exports.page, filePath));
+  }
+}
+
+exports.makeContextualErrorMessage = makeContextualErrorMessage;
+function makeContextualErrorMessage(beginningMessage, content, filePath) {
+  const errorMessage = util.stripMargin`
+          |exports.page must be set to a function(options: Object) that returns
+          |an array that conforms to the @chooie/js_to_html structure as
+          |documented at 'https://github.com/chooie/js_to_html'.`;
+
+  return util.stripMargin`
+    |${errorMessage}
+    |Got '${content}' of type ${typeof content}. Issue found in file
+    |'${filePath}'.`;
+}
 
 function convertElementToHtml(indentLevel, elementArray, arrayContext) {
   if (!Array.isArray(elementArray)) {

@@ -22,12 +22,13 @@ exports.__express = function __express(filePath, options, callback) {
 
 exports.checkPageIsCorrectlySetup = checkPageIsCorrectlySetup;
 function checkPageIsCorrectlySetup(jsPage, filePath) {
-  if (!jsPage.page) {
+  const pageValue = jsPage.page;
+  if (!pageValue) {
     throw new Error(`exports.page must be set at ${filePath}`);
   }
 
-  if (typeof jsPage.page !== "function") {
-    throw new Error(makeContextualErrorMessage(exports.page, filePath));
+  if (typeof pageValue !== "function") {
+    throw new Error(makeContextualErrorMessage(pageValue, filePath));
   }
 }
 
