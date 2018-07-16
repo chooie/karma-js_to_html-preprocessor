@@ -42,7 +42,7 @@
     "simplebuild-karma": "1.0.0"
   },
   "dependencies": {
-    "@chooie/js_to_html": "1.0.6",
+    "@chooie/js_to_html": "1.0.7",
     "express": "4.16.3",
     "procfile": "0.1.1"
   }
