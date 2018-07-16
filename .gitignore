@@ -1,0 +1,26 @@
+# Mac OS X
+.DS_Store
+
+# WebStorm
+.idea/workspace.xml
+
+# Emacs
+.\#*
+
+# Temporary files
+*.tmp
+*.temp
+
+# npm
+node_modules/**/.bin/
+
+# Build artifacts
+generated/
+generated_build/
+
+node_modules/fsevents/lib/binding/Release/node-v59-darwin-x64/
+node_modules/uws/
+
+## ChromeDriver
+node_modules/chromedriver/chromedriver/
+node_modules/chromedriver/lib/chromedriver/
