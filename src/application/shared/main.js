@@ -9,6 +9,7 @@ function createJsToHtmlPreprocessor(logger, basePath, args, config) {
     inlineReplaceFileEnding(file, "js", "html");
     const jsPage = require(filePath);
     const options = Object.assign({}, args, config);
+    jsToHtml.checkPageIsCorrectlySetup(jsPage, filePath);
 
     let htmlPage;
     try {
@@ -23,13 +24,15 @@ function createJsToHtmlPreprocessor(logger, basePath, args, config) {
 }
 
 createJsToHtmlPreprocessor.$inject = [
-  "logger", "config.basePath", "args", "config.jsToHtmlPreprocessor"
+  "logger",
+  "config.basePath",
+  "args",
+  "config.jsToHtmlPreprocessor"
 ];
 
 module.exports = {
   "preprocessor:js_to_html": ["factory", createJsToHtmlPreprocessor]
 };
-
 
 function inlineReplaceFileEnding(file, current, replacement) {
   const filePath = file.originalPath;
