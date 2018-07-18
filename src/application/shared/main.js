@@ -7,7 +7,7 @@ function createJsToHtmlPreprocessor(logger, basePath, args, config) {
     const filePath = file.originalPath;
     log.debug("Processing '%s'.", filePath);
     const dataFilePath = filePath.replace(".page.js", ".page.karma_data.js");
-    const data = loadFileData(log, filePath, dataFilePath);
+    const data = loadDataFile(log, filePath, dataFilePath);
     inlineReplaceFileEnding(file, "js", "html");
     const options = Object.assign({}, args, config, data);
     getHtml(log, filePath, options, done);
@@ -25,10 +25,12 @@ module.exports = {
   "preprocessor:js_to_html": ["factory", createJsToHtmlPreprocessor]
 };
 
-function loadFileData(log, filePath, dataFilePath) {
+function loadDataFile(log, filePath, dataFilePath) {
   if (moduleIsAvailable(dataFilePath)) {
-    log.debug("Processing '%s'.", dataFilePath);
+    log.debug("Processing data file '%s'.", dataFilePath);
     const data = require(dataFilePath);
+    clearNodeRequireCache();
+
     if (!isObject(data)) {
       throw new Error(
         "module.exports must be set to an object containing the expected " +
@@ -73,6 +75,8 @@ function isObject(value) {
 function getHtml(log, filePath, options, callback) {
   let htmlPage;
   const jsPage = require(filePath);
+  clearNodeRequireCache();
+
   jsToHtml.checkPageIsCorrectlySetup(jsPage, filePath);
   try {
     const structureWithOptions = jsPage.page(options);
@@ -82,4 +86,10 @@ function getHtml(log, filePath, options, callback) {
   } finally {
     callback(htmlPage);
   }
+}
+
+function clearNodeRequireCache() {
+  Object.keys(require.cache).forEach(function(key) {
+    delete require.cache[key];
+  });
 }
