@@ -21,6 +21,13 @@
     "type": "git",
     "url": "https://github.com/chooie/karma-js_to_html-preprocessor"
   },
+  "keywords": [
+    "karma-preprocessor",
+    "karma",
+    "template",
+    "plugin",
+    "js_to_html"
+  ],
   "author": "Charles Hebert",
   "license": "ISC",
   "devDependencies": {
