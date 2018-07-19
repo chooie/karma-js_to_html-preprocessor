@@ -14,7 +14,7 @@ Then you can test at the (faster) integration level rather than the
 (slower) end-to-end level by using Karma with this plugin.
 
 ## Install
-`npm install --save-dev karma-js_to_html_preprocessor`
+`npm install --save-dev karma-js_to_html-preprocessor`
 
 ## Integration
 For a full example integration, see https://github.com/chooie/js_to_html.
