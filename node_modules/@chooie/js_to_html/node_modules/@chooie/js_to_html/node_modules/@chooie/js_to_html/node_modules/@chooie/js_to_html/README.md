@@ -161,7 +161,8 @@ exports.make = function make() {
   functions, etc.
 
 ## Roadmap
-- Express template engine
+- Caching?
+- Support for self-closing elements? Possibly unnecessary?
 - <<Your suggestion here!\>\>
 
 ## Development

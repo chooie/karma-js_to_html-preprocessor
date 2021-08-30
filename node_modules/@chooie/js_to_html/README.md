@@ -94,20 +94,24 @@ outputs
 ```
 
 ## Express Integration
+### src/application/server/http_server.js
+
 ```js
 const httpServer = express();
 
-httpServer.set("views", "src/application/server/views/");
-httpServer.engine(".js", require("@chooie/js_to_html").__express);
-httpServer.set("view engine", "js");
+httpServer.set("views", "src/application/client/content/template_views/");
+httpServer.engine("page.js", require("@chooie/js_to_html").__express);
+httpServer.set("view engine", "page.js");
 
 httpServer.get("/", function(req, res) {
-  res.render("index");
+  res.render("index", { colors: ["Red", "Blue", "Green"] });
 });
+```
 
-// src/application/server/views/index.js
+### src/application/client/content/template_views/index.page.js
+```js
 const head = require("./partials/head.js");
-const util = require("../../shared/util.js");
+const util = require("../../../shared/util.js");
 
 exports.page = function page(options) {
   return [
@@ -121,6 +125,7 @@ exports.page = function page(options) {
     [
       "body",
       ["h1", { id: "header-text" }, "Hello, world!"],
+      makeList(options.colors),
       ["script", { src: "bundle.js" }],
       [
         "script",
@@ -133,7 +138,19 @@ exports.page = function page(options) {
   ];
 };
 
-// src/application/server/views/partials
+function makeList(items) {
+  return [
+    "ul",
+    ...items.map(function(item) {
+      return ["li", item];
+    })
+  ];
+}
+```
+
+### src/application/client/content/template_views/partials/head.js
+
+```js
 exports.make = function make() {
   return [
     [
@@ -152,6 +169,9 @@ exports.make = function make() {
   ];
 };
 ```
+
+## Karma Integration
+https://github.com/chooie/karma-js_to_html-preprocessor
 
 ## Why use this approach?
 - It's just JavaScript data structures. No need to learn a new paradigm or
