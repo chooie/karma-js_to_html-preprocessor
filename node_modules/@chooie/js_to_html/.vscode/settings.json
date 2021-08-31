@@ -1,0 +1,16 @@
+{
+  "cSpell.ignoreWords": [],
+  "cSpell.words": ["interactor"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Need to run Prettier first then ESLint. This helps with some whitespacing
+  // issues that Prettier creates that ESLint does not like. Plus, since ESLint
+  // is tied to the check-all-* tasks we won't be in risk of breaking any
+  // builts if Prettier formats something against out ESLint rules.
+  "editor.codeActionsOnSave": ["source.fixAll.format", "source.fixAll.eslint"],
+  "editor.formatOnSave": true,
+  "editor.rulers": [80],
+  "eslint.options": {
+    "configFile": ".vscode/eslint.conf.js"
+  }
+}

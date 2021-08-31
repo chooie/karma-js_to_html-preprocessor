@@ -39,9 +39,9 @@ function checkPageIsCorrectlySetup(jsPage, filePath) {
 exports.makeContextualErrorMessage = makeContextualErrorMessage;
 function makeContextualErrorMessage(content, filePath) {
   const errorMessage = util.stripMargin`
-          |exports.page must be set to a function(options: Object) that returns
-          |an array that conforms to the @chooie/js_to_html structure as
-          |documented at 'https://github.com/chooie/js_to_html'.`;
+    |exports.page must be set to a function(options: Object) that returns
+    |an array that conforms to the @chooie/js_to_html structure as
+    |documented at 'https://github.com/chooie/js_to_html'.`;
 
   return util.stripMargin`
     |${errorMessage}
@@ -84,7 +84,7 @@ function convertElementToHtml(indentLevel, elementArray, arrayContext) {
   if (isAnEmptyElement(elementArray)) {
     return handleEmptyElement(indentLevel, elementArray);
   }
-    
+
   return handleNestedElement(indentLevel, elementArray);
 }
 
@@ -93,14 +93,12 @@ function isEmpty(array) {
 }
 
 function isAnEmptyElement(elementArray) {
-  return elementArray.length === 1 || 
-  (
-    elementArray.length === 2 && 
-    (
-      second(elementArray) === "" || 
-      second(elementArray) === null || 
-      second(elementArray) === undefined
-    )
+  return (
+    elementArray.length === 1 ||
+    (elementArray.length === 2 &&
+      (second(elementArray) === "" ||
+        second(elementArray) === null ||
+        second(elementArray) === undefined))
   );
 }
 
@@ -110,10 +108,7 @@ function handleEmptyElement(indentLevel, elementArray) {
   return makeStringElement(elementTag, indentLevel);
 
   function makeStringElement(elementTag, indentLevel) {
-    return (
-      fillWhiteSpace(indentLevel) +
-      `<${elementTag}></${elementTag}>\n`
-    );
+    return fillWhiteSpace(indentLevel) + `<${elementTag}></${elementTag}>\n`;
   }
 }
 
@@ -140,11 +135,15 @@ function handleNestedElement(indentLevel, elementArray) {
   return accumulatedString + fillWhiteSpace(indentLevel) + `</${elementTag}>\n`;
 }
 
-function convertElementsToHtml(
-  remainingElements,
-  indentLevel,
-  arrayContext
-) {
+function convertElementsToHtml(remainingElements, indentLevel, arrayContext) {
+  if (
+    first(remainingElements) === "" ||
+    first(remainingElements) === null ||
+    first(remainingElements) === undefined
+  ) {
+    return "";
+  }
+
   return remainingElements.reduce(function (accumulatedString, element) {
     if (typeof element === "string" || typeof element === "number") {
       element = "" + element;
@@ -160,6 +159,7 @@ function convertElementsToHtml(
       });
       return accumulatedString + stringElement + "\n";
     }
+
     return (
       accumulatedString +
       convertElementToHtml(indentLevel + 2, element, arrayContext)

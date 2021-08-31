@@ -346,6 +346,16 @@ describe("SHARED: Main", function () {
 
     assert.equal(convertedHtml, expectedHtml.trim() + "\n");
   });
+
+  it("works for an empty string element with options", function () {
+    const convertedHtml = main.convertElement(["h1", { foo: "bar" }, ""]);
+    const expectedHtml = util.stripMargin`
+    |<h1 foo="bar">
+    |</h1>
+    |`;
+
+    assert.equal(convertedHtml, expectedHtml.trim() + "\n");
+  });
 });
 
 function makeTitle(title) {
