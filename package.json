@@ -1,6 +1,6 @@
 {
   "name": "karma-js_to_html-preprocessor",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Karma plugin for @chooie/js_to_html",
   "main": "src/application/shared/main.js",
   "engines": {
